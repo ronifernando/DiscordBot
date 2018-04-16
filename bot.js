@@ -50,11 +50,13 @@ client.on('message', async message => {
                 message.channel.sendMessage("Judul lagu belum ditambahkan");
                 return;
             }
+            
             if(!message.member.voiceChannel){
                 message.channel.sendMessage("Masuk ke Voice Channel dulu");
                 return;
             }
-            if(!servers[message.guild.id]) server[message.guild.id] = {
+            
+            if(!servers[message.guild.id]) servers[message.guild.id] = {
                 queue: []
             };            
             
