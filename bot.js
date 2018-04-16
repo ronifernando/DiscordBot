@@ -4,6 +4,8 @@ const yt = require('ytdl-core');
 
 const client = new Discord.Client();
 
+let GLOBAL = false;
+
 let queues = {};
 
 client.on('ready', async () => {
@@ -79,5 +81,12 @@ client.on('message', async msg => {
             message.channel.sendMessage("Command tidak ada");
     }    
 });
+function getQueue(server) {
+		if (GLOBAL) server = '_'; // Change to global queue.
+
+		// Return the queue.
+		if (!queues[server]) queues[server] = [];
+		return queues[server];
+}
 
 client.login(process.env.BOT_TOKEN);
