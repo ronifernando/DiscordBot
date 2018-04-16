@@ -4,7 +4,7 @@ const yt = require('ytdl-core');
 
 const client = new Discord.Client();
 
-let queue = {};
+let queues = {};
 
 client.on('ready', async () => {
     console.log('I am ready!');
@@ -12,81 +12,68 @@ client.on('ready', async () => {
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
 
-client.on('message', async message => {  
-    if(message.author.bot) return;
-    if(message.channel.type === "dm") return;
-    if(!message.content.startsWith(botconfig.prefix)) return;
+client.on('message', async msg => {  
+    if(msg.author.bot) return;
+    if(msg.channel.type === "dm") return;
+    if(!msg.content.startsWith(botconfig.prefix)) return;
    
-    var args = message.content.substring(botconfig.prefix.length).split(" ");
+    var args = msg.content.substring(botconfig.prefix.length).split(" ");
     var cmd = args[0]
     var args1 = args.slice(1);
     
     switch (cmd.toLowerCase()){
         case "help":
-            message.channel.send("Under Development!");
+            msg.channel.send("Under Development!");
             break;
         case "admin":
-            if (message.member.roles.find("name", "ADMIN")){
-                message.channel.send("anda admin!");
+            if (msg.member.roles.find("name", "ADMIN")){
+                msg.channel.send("anda admin!");
             } else {
-                message.channel.send("anda bukan admin!");
+                msg.channel.send("anda bukan admin!");
             }
             break;
         case "play":
-            if (queue[msg.guild.id] === undefined) return msg.channel.sendMessage(`Add some songs to the queue first with ${tokens.prefix}add`);
-            if (!msg.guild.voiceConnection) return commands.join(msg).then(() => commands.play(msg));
-            if (queue[msg.guild.id].playing) return msg.channel.sendMessage('Already Playing');
-            let dispatcher;
-            queue[msg.guild.id].playing = true;
+            // Make sure the user is in a voice channel.
+            if (!CHANNEL && msg.member.voiceChannel === undefined) return msg.channel.send(wrap('You\'re not in a voice channel.'));
 
-            console.log(queue);
-            (function play(song) {
-                console.log(song);
-                if (song === undefined) return msg.channel.sendMessage('Queue is empty').then(() => {
-                    queue[msg.guild.id].playing = false;
-                    msg.member.voiceChannel.leave();
-                });
-                msg.channel.sendMessage(`Playing: **${song.title}** as requested by: **${song.requester}**`);
-                dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }));
-                let collector = msg.channel.createCollector(m => m);
-                collector.on('message', m => {
-                    if (m.content.startsWith(tokens.prefix + 'pause')) {
-                        msg.channel.sendMessage('paused').then(() => {dispatcher.pause();});
-                    } else if (m.content.startsWith(tokens.prefix + 'resume')){
-                        msg.channel.sendMessage('resumed').then(() => {dispatcher.resume();});
-                    } else if (m.content.startsWith(tokens.prefix + 'skip')){
-                        msg.channel.sendMessage('skipped').then(() => {dispatcher.end();});
-                    } else if (m.content.startsWith('volume+')){
-                        if (Math.round(dispatcher.volume*50) >= 100) return msg.channel.sendMessage(`Volume: ${Math.round(dispatcher.volume*50)}%`);
-                        dispatcher.setVolume(Math.min((dispatcher.volume*50 + (2*(m.content.split('+').length-1)))/50,2));
-                        msg.channel.sendMessage(`Volume: ${Math.round(dispatcher.volume*50)}%`);
-                    } else if (m.content.startsWith('volume-')){
-                        if (Math.round(dispatcher.volume*50) <= 0) return msg.channel.sendMessage(`Volume: ${Math.round(dispatcher.volume*50)}%`);
-                        dispatcher.setVolume(Math.max((dispatcher.volume*50 - (2*(m.content.split('-').length-1)))/50,0));
-                        msg.channel.sendMessage(`Volume: ${Math.round(dispatcher.volume*50)}%`);
-                    } else if (m.content.startsWith(tokens.prefix + 'time')){
-                        msg.channel.sendMessage(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
+            // Make sure the suffix exists.
+            if (!suffix) return msg.channel.send(wrap('No video specified!'));
+
+            // Get the queue.
+            const queue = getQueue(msg.guild.id);
+
+            // Check if the queue has reached its maximum size.
+            if (queue.length >= MAX_QUEUE_SIZE) {
+                return msg.channel.send(wrap('Maximum queue size reached!'));
+            }
+
+            // Get the video information.
+            msg.channel.send(wrap('Searching...')).then(response => {
+                var searchstring = suffix
+                if (!suffix.toLowerCase().startsWith('http')) {
+                    searchstring = 'gvsearch1:' + suffix;
+                }
+
+                YoutubeDL.getInfo(searchstring, ['-q', '--no-warnings', '--force-ipv4'], (err, info) => {
+                    // Verify the info.
+                    if (err || info.format_id === undefined || info.format_id.startsWith('0')) {
+                        return response.edit(wrap('Invalid video!'));
                     }
+
+                    info.requester = msg.author.id;
+
+                    // Queue the video.
+                    response.edit(wrap('Queued: ' + info.title)).then(() => {
+                        queue.push(info);
+                        // Play if only one element in the queue.
+                        if (queue.length === 1) executeQueue(msg, queue);
+                    }).catch(console.log);
                 });
-                dispatcher.on('end', () => {
-                    collector.stop();
-                    play(queue[msg.guild.id].songs.shift());
-                });
-                dispatcher.on('error', (err) => {
-                    return msg.channel.sendMessage('error: ' + err).then(() => {
-                        collector.stop();
-                        play(queue[msg.guild.id].songs.shift());
-                    });
-                });
-            })(queue[msg.guild.id].songs.shift());
+            }).catch(console.log);
             break;
         case "skip":
-            var server = servers[message.guild.id];
-            if (server.dispatcher) server.dispatcher.end();
             break;
         case "stop":
-            var server = servers[message.guild.id];
-            if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
             break;
         default:
             message.channel.sendMessage("Command tidak ada");
