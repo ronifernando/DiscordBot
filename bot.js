@@ -8,11 +8,8 @@ client.on('ready', () => {
     client.user.setPresence({ game: { name: '=help', type: 2 } });
 });
 
-client.on('message', message => {
-    if (message.author.bot) return;
-    if (message.channel.type === "dm") return;
-    
-    let prefix = "=";
+client.on('message', message => {    
+    let prefix = botconfig.prefix;
     let messageArray = message.content.split(" ");
     let cmd = messageArray[0];
     let args = messageArray.slice(1);
