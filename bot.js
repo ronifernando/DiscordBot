@@ -34,10 +34,10 @@ client.on('message', async msg => {
             break;
         case "play":
             // Make sure the user is in a voice channel.
-            if (!CHANNEL && msg.member.voiceChannel === undefined) return msg.channel.send(wrap('You\'re not in a voice channel.'));
+            if (msg.member.voiceChannel === undefined) return msg.channel.send(wrap('You\'re not in a voice channel.'));
 
             // Make sure the suffix exists.
-            if (!suffix) return msg.channel.send(wrap('No video specified!'));
+            if (!args[1]) return msg.channel.send(wrap('No video specified!'));
 
             // Get the queue.
             const queue = getQueue(msg.guild.id);
