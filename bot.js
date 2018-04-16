@@ -65,11 +65,11 @@ client.on('message', async message => {
                 play(connection, message);
             });
             break;
-        case "skip:
+        case "skip":
             var server = servers[message.guild.id];
             if (server.dispatcher) server.dispatcher.end();
             break;
-        case "stop"
+        case "stop":
             var server = servers[message.guild.id];
             if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
             break;
