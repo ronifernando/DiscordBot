@@ -65,9 +65,11 @@ function play(msg, title){
 
   var server = servers[msg.guild.id];
 
+  server.queue.push(title);
+
   if (!msg.guild.voiceConnection) msg.member.voiceChannel.join().then(function(connection){
     play(connection, msg);
-  });
+  };
 }
 
 function playcon(connection, message){
