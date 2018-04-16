@@ -1,6 +1,6 @@
 const botconfig = require('./botconfig.json');
 const Discord = require('discord.js');
-const Music = require('./discordmusic.js');
+const Music = require('discord.js-musicbot-addon');
 
 const client = new Discord.Client();
 
