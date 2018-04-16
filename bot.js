@@ -39,7 +39,7 @@ client.on('message', async msg => {
             }
             break;
         default:
-            message.channel.sendMessage("Command tidak ada");
+            msg.channel.sendMessage("Command tidak ada");
     }
 });
 
