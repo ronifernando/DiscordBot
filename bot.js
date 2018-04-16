@@ -22,9 +22,9 @@ client.on('ready', async () => {
 });
 
 client.on('message', async message => {
-    if(msg.author.bot) return;
-    if(msg.channel.type === "dm") return;
-    if(!msg.content.startsWith(botconfig.prefix)) return;
+    if(message.author.bot) return;
+    if(message.channel.type === "dm") return;
+    if(!message.content.startsWith(botconfig.prefix)) return;
 
     const command = message.substring(PREFIX.length).split(/[ \n]/)[0].toLowerCase().trim();
     const suffix = message.substring(PREFIX.length + command.length).trim();
