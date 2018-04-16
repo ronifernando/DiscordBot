@@ -60,7 +60,7 @@ client.on('message', async message => {
                 queue: []
             };            
             
-            var server = servers[message.guils.id];
+            var server = servers[message.guild.id];
             
             server.queue.push(args[1]);
             
