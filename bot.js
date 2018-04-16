@@ -17,7 +17,7 @@ client.on('message', async message => {
     var cmd = messageArray[0]
     var args = messageArray.slice(1);
     
-    if (message.member.roles.find("name", "ADMIN") {
+    if (message.member.roles.find("name", "ADMIN")) {
         switch (cmd.toLowerCase()){
             case "cekadmin":
                 message.channel.send("anda admin!");
