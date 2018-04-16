@@ -34,7 +34,7 @@ client.on('message', async message => {
 
     switch (cmd.toLowerCase()){
         case "help":
-            message.channel.send("Under Development!");
+            message.channel.send("Under Development!\nalready implemented\n-Music Features");
             break;
         case "admin":
             if (isAdmin(message.member)){
