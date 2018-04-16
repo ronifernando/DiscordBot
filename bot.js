@@ -30,11 +30,14 @@ client.on('message', async message => {
         disableLoop: true,
         youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
       });
+    }else{
+      message.channel.send("Mohon maaf command ini hanya untuk role DJ");
+      break;
     }
 
     switch (cmd.toLowerCase()){
         case "help":
-            message.channel.send("Under Development!\nalready implemented\n-Music Features");
+            message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
             break;
         case "admin":
             if (isAdmin(message.member)){
