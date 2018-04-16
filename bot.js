@@ -51,23 +51,10 @@ client.on('message', async message => {
     }
 });
 
-/**
- * Checks if a user is an admin.
- *
- * @param {GuildMember} member - The guild member
- * @returns {boolean} -
- */
 function isAdmin(member) {
   return member.hasPermission("ADMINISTRATOR");
 }
 
-/**
- * Checks if the user can skip the song.
- *
- * @param {GuildMember} member - The guild member
- * @param {array} queue - The current queue
- * @returns {boolean} - If the user can skip
- */
 function canSkip(member, queue) {
   if (ALLOW_ALL_SKIP) return true;
   else if (queue[0].requester === member.id) return true;
@@ -75,12 +62,6 @@ function canSkip(member, queue) {
   else return false;
 }
 
-/**
- * Gets the song queue of the server.
- *
- * @param {integer} server - The server id.
- * @returns {object} - The song queue.
- */
 function getQueue(server) {
   // Check if global queues are enabled.
   if (GLOBAL) server = '_'; // Change to global queue.
@@ -90,13 +71,6 @@ function getQueue(server) {
   return queues[server];
 }
 
-/**
- * The command for adding a song to the queue.
- *
- * @param {Message} msg - Original message.
- * @param {string} suffix - Command suffix.
- * @returns {<promise>} - The response edit.
- */
 function play(msg, suffix) {
   // Make sure the user is in a voice channel.
   if (!CHANNEL && msg.member.voiceChannel === undefined) return msg.channel.send(wrap('You\'re not in a voice channel.'));
@@ -308,20 +282,6 @@ function executeQueue(msg, queue) {
     // Play the video.
     msg.channel.send(wrap('Now Playing: ' + video.title)).then(() => {
       let dispatcher = connection.playStream(ytdl(video.webpage_url, {filter: 'audioonly'}), {seek: 0, volume: (DEFAULT_VOLUME/100)});
-
-      connection.on('error', (error) => {
-        // Skip to the next song.
-        console.log(error);
-        queue.shift();
-        executeQueue(msg, queue);
-      });
-
-      dispatcher.on('error', (error) => {
-        // Skip to the next song.
-        console.log(error);
-        queue.shift();
-        executeQueue(msg, queue);
-      });
 
       dispatcher.on('end', () => {
         // Wait a second.
