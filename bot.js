@@ -18,16 +18,12 @@ client.on('message', async message => {
     let args = messageArray.slice(1);
     
     
-    if (cmd === '${prefix}ping') {
+    if (cmd === '=ping') {
     	return message.channel.send('PONG!');
   	}
     
-    if (cmd === '${prefix}bing') {
+    if (cmd === '=bing') {
     	return message.reply('BONG!');
-  	}
-    
-    if (cmd === 'ping') {
-    	return message.channel.send('PONG!');
   	}
     
 });
