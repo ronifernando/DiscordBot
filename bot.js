@@ -12,7 +12,12 @@ client.on('ready', async () => {
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
 
-
+const music = new Music(client, {
+  prefix: PREFIX,
+  maxQueueSize: "100",
+  disableLoop: true,
+  youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+});
 
 client.on('message', async message => {
     if(message.author.bot) return;
@@ -34,13 +39,6 @@ client.on('message', async message => {
                 message.channel.send("anda bukan admin!");
             }
             break;
-        default:
-            const music = new Music(client, {
-              prefix: PREFIX,
-              maxQueueSize: "100",
-              disableLoop: true,
-              youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-            });
     }
 });
 
