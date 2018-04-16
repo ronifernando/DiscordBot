@@ -16,23 +16,19 @@ client.on('message', async message => {
     var messageArray = message.content.substring(botconfig.prefix.length).split(" ");
     var cmd = messageArray[0]
     var args = messageArray.slice(1);
-    var admin = false;
     
-    if (message.member.roles.find("name", "ADMIN")){
-        admin = true;
-    } else {
-        admin = false;
-    }
-    
-    if (cmd.toLowerCase() === "cekadmin" && admin = true){
-        message.channel.send("anda admin!");
-        break;
-    }else if (cmd.toLowerCase() === "help"){
-        message.channel.send("Under Development!");
-        break;
-    }
-    
-    
+    switch (cmd.toLowerCase()){
+        case "help":
+            message.channel.send("Under Development!");
+            break;
+        case "admin":
+            if (message.member.roles.find("name", "ADMIN")){
+                message.channel.send("anda admin!");
+            } else {
+                message.channel.send("anda bukan admin!");
+            }
+            break;
+    }    
 });
 
 client.login(process.env.BOT_TOKEN);
