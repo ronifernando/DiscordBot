@@ -13,6 +13,9 @@ client.on('ready', async () => {
 });
 
 const music = new Music(client, {
+  prefix: PREFIX,
+  maxQueueSize: "100",
+  disableLoop: true,
   youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
 });
 
