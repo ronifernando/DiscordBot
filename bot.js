@@ -44,8 +44,7 @@ client.on('message', async message => {
             }
             break;
         case 'play':
-            play(message, suffix);
-            break;
+            return play(message, suffix);
         default:
             message.channel.sendMessage("Command tidak ada");
     }
@@ -283,17 +282,7 @@ function executeQueue(msg, queue) {
     msg.channel.send(wrap('Now Playing: ' + video.title)).then(() => {
       let dispatcher = connection.playStream(ytdl(video.webpage_url, {filter: 'audioonly'}), {seek: 0, volume: (DEFAULT_VOLUME/100)});
 
-      dispatcher.on('end', () => {
-        // Wait a second.
-        setTimeout(() => {
-          if (queue.length > 0) {
-            // Remove the song from the queue.
-            queue.shift();
-            // Play the next song in the queue.
-            executeQueue(msg, queue);
-          }
-        }, 1000);
-      });
+      
     }).catch((error) => {
       console.log(error);
     });
