@@ -31,8 +31,7 @@ client.on('message', async message => {
         youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
       });
     }else{
-      message.channel.send("Mohon maaf command ini hanya untuk role DJ");
-      break;
+      return message.channel.send("Mohon maaf command ini hanya untuk role DJ");
     }
 
     switch (cmd.toLowerCase()){
