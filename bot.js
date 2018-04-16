@@ -23,12 +23,11 @@ client.on('message', async message => {
     var cmd = args[0];
     var args1 = args.slice(1);
 
-    if(isAdmin(message.member)){
+    if(isDJ(message.member)){
       const music = new Music(client, {
         prefix: PREFIX,
         maxQueueSize: "100",
         disableLoop: true,
-        ownerCmd: "DJ",
         youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
       });
     }
@@ -49,6 +48,10 @@ client.on('message', async message => {
 
 function isAdmin(member) {
   return member.hasPermission("ADMINISTRATOR");
+}
+
+function isDJ(member) {
+  return member.roles.find("name", "DJ");
 }
 
 client.login(process.env.BOT_TOKEN);
