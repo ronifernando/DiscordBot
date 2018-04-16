@@ -26,8 +26,8 @@ client.on('message', async message => {
     if(message.channel.type === "dm") return;
     if(!message.content.startsWith(botconfig.prefix)) return;
 
-    const command = message.substring(PREFIX.length).split(/[ \n]/)[0].toLowerCase().trim();
-    const suffix = message.substring(PREFIX.length + command.length).trim();
+    const command = message.content.substring(PREFIX.length).split(/[ \n]/)[0].toLowerCase().trim();
+    const suffix = message.content.substring(PREFIX.length + command.length).trim();
     var args = message.content.substring(PREFIX.length).split(" ");
     var cmd = args[0];
     var args1 = args.slice(1);
