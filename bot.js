@@ -61,7 +61,7 @@ function play(msg, title){
   }
   if(!servers[msg.guild.id]) servers[msg.guild.id] = {
     queue: []
-  });
+  };
 
   var server = servers[msg.guild.id];
 
@@ -69,7 +69,7 @@ function play(msg, title){
 
   if (!msg.guild.voiceConnection) msg.member.voiceChannel.join().then(function(connection){
     play(connection, msg);
-  };
+  });
 }
 
 function playcon(connection, message){
