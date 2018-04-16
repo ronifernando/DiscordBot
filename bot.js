@@ -75,7 +75,7 @@ function play(msg, title){
 function playcon(connection, message){
   var server = servers[message.guild.id];
 
-  server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
+  server.dispatcher = connection.playStream(ytdl('https://www.youtube.com/watch?v=d9IxdwEFk1c', {filter: "audioonly"}));
 
   server.queue.shift();
 
