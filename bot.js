@@ -16,7 +16,7 @@ client.on('message', async message => {
     var messageArray = message.content.substring(botconfig.prefix.length).split(" ");
     var cmd = messageArray[0]
     var args = messageArray.slice(1);
-    var admin = false
+    var admin = false;
     
     if (message.member.roles.find("name", "ADMIN")){
         admin = true;
