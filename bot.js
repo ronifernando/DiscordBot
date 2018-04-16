@@ -68,7 +68,7 @@ function play(msg, title){
   server.queue.push(title);
 
   if (!msg.guild.voiceConnection) msg.member.voiceChannel.join().then(function(connection){
-    play(connection, msg);
+    playcon(connection, msg);
   });
 }
 
