@@ -26,6 +26,10 @@ client.on('message', async message => {
     	return message.reply('BONG!');
   	}
     
+    if (cmd === 'ping') {
+    	return message.channel.send('PONG!');
+  	}
+    
 });
 
 client.login(process.env.BOT_TOKEN);
