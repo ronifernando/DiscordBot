@@ -2,7 +2,6 @@ const botconfig = require('./botconfig.json');
 const Discord = require('discord.js');
 const YTDL = require('ytdl-core');
 
-
 function play(connection, message){
     var server = servers[message.guild.id];
     
