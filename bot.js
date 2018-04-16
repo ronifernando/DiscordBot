@@ -4,7 +4,7 @@ const yt = require('ytdl-core');
 
 const client = new Discord.Client();
 
-var servers = {};
+var queue = {};
 
 client.on('ready', async () => {
     console.log('I am ready!');
