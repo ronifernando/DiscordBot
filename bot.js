@@ -1,3 +1,4 @@
+const botconfig = require('./botconfig.json');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const prefix = "=";
@@ -11,9 +12,9 @@ client.on('ready', async () => {
 client.on('message', async message => {  
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
-    if(!message.content.startsWith(prefix)) return;
+    if(!message.content.startsWith(botconfig.prefix)) return;
    
-    var messageArray = message.content.substring(prefix.length).split(" ");
+    var messageArray = message.content.substring(botconfig.prefix.length).split(" ");
     var cmd = messageArray[0]
     var args = messageArray.slice(1);
     
