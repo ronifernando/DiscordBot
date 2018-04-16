@@ -39,13 +39,6 @@ client.on('message', async msg => {
                 msg.channel.send("anda bukan admin!");
             }
             break;
-        case "play":
-            
-            break;
-        case "skip":
-            break;
-        case "stop":
-            break;
         default:
             message.channel.sendMessage("Command tidak ada");
     }    
