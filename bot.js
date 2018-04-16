@@ -44,7 +44,7 @@ client.on('message', async msg => {
             }
             break;
         case 'play':
-    				play(msg, suffix);
+            play(msg, suffix);
             break;
         default:
             msg.channel.sendMessage("Command tidak ada");
