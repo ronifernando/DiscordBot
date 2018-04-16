@@ -12,21 +12,21 @@ client.on('message', async message => {
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
     
-    if(!message.content.subtring(prefix)) return;
+    if(!message.content.startsWith(prefix)) return;
     
 
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0].substring(prefix.lenght);
-    let args = messageArray.slice(1);
+    var messageArray = message.content.substring(prefix.length).split(" ");
+    var cmd = messageArray[0]
+    var args = messageArray.slice(1);
     
-    
-    if (cmd === 'ping') {
-    	return message.channel.send('PONG!');
-  	}
-    
-    if (cmd === 'bing') {
-    	return message.reply('BONG!');
-  	}
+    switch (cmd.toLowerCase()){
+        case "ping":
+            message.channel.send('PONG!');
+            break;
+        case "help":
+            message.channel.send('Under Development!');
+            break;
+    }
     
 });
 
