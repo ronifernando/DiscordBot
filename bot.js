@@ -11,18 +11,13 @@ client.on('ready', async () => {
 client.on('message', async message => {  
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
-    
     if(!message.content.startsWith(prefix)) return;
-    
-
+   
     var messageArray = message.content.substring(prefix.length).split(" ");
     var cmd = messageArray[0]
     var args = messageArray.slice(1);
     
     switch (cmd.toLowerCase()){
-        case "ping":
-            message.channel.send('PONG!');
-            break;
         case "help":
             message.channel.send('Under Development!');
             break;
