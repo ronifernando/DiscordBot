@@ -30,8 +30,6 @@ client.on('message', async message => {
         disableLoop: true,
         youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
       });
-    }else{
-      return message.channel.send("Mohon maaf command ini hanya untuk role DJ");
     }
 
     switch (cmd.toLowerCase()){
