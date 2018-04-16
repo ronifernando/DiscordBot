@@ -28,6 +28,7 @@ client.on('message', async message => {
         prefix: PREFIX,
         maxQueueSize: "100",
         disableLoop: true,
+        ownerCmd: "DJ",
         youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
       });
     }
