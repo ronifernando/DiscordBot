@@ -21,33 +21,33 @@ client.on('ready', async () => {
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
 
-client.on('message', async msg => {
+client.on('message', async message => {
     if(msg.author.bot) return;
     if(msg.channel.type === "dm") return;
     if(!msg.content.startsWith(botconfig.prefix)) return;
 
     const command = message.substring(PREFIX.length).split(/[ \n]/)[0].toLowerCase().trim();
     const suffix = message.substring(PREFIX.length + command.length).trim();
-    var args = msg.content.substring(PREFIX.length).split(" ");
+    var args = message.content.substring(PREFIX.length).split(" ");
     var cmd = args[0];
     var args1 = args.slice(1);
 
     switch (cmd.toLowerCase()){
         case "help":
-            msg.channel.send("Under Development!");
+            message.channel.send("Under Development!");
             break;
         case "admin":
-            if (msg.member.roles.find("name", "ADMIN")){
-                msg.channel.send("anda admin!");
+            if (message.member.roles.find("name", "ADMIN")){
+                message.channel.send("anda admin!");
             } else {
-                msg.channel.send("anda bukan admin!");
+                message.channel.send("anda bukan admin!");
             }
             break;
         case 'play':
-            play(msg, suffix);
+            play(message, suffix);
             break;
         default:
-            msg.channel.sendMessage("Command tidak ada");
+            message.channel.sendMessage("Command tidak ada");
     }
 });
 
