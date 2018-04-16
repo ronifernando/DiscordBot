@@ -1,8 +1,7 @@
 const botconfig = require('./botconfig.json');
 const Discord = require('discord.js');
 const yt = require('ytdl-core');
-const jsmusic = require('discord.js-music');
-                                                   
+
 const client = new Discord.Client();
 
 var servers = {};
