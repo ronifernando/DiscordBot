@@ -33,11 +33,11 @@ client.on('message', async message => {
         case "help":
             message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
             break;
-        case "Admin":
+        case "admin":
             if (isAdmin(message.member)){
-                message.channel.send("anda admin!");
+                message.channel.send("Anda admin!");
             } else {
-                message.channel.send("anda bukan admin!");
+                message.channel.send("Anda bukan admin!");
             }
             break;
         case "hoki":
