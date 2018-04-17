@@ -66,7 +66,7 @@ client.on('message', async message => {
             let gRole = message.guild.roles.find('name', "DJ ♫");
             if(!gRole) return message.reply("Role tidak ada");
             if (!isDJ(rMember, gRole)){
-              if (args[1] === 365951){
+              if (args1 === "365951"){
                 hk = 7;
               }
               if (hk === 7){
