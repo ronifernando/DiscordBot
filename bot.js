@@ -46,7 +46,7 @@ client.on('message', async message => {
                 if(!rMember) return message.reply("User tidak ada");
                 let gRole = message.guild.roles.find('name', "DJ");
                 if(!gRole) return message.reply("Role tidak ada");
-                message.channel.send('selamat <@${rMember.id}>, anda mendapatkan role DJ.');
+                message.channel.send('selamat <@'+${rMember.id}+'>, anda mendapatkan role DJ.');
                 rMember.addRole(gRole.id);
             } else {
                 message.channel.send("anda belum beruntung!");
