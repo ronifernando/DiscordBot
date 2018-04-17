@@ -31,7 +31,6 @@ client.on('message', async message => {
     var cmd = args[0];
     var args1 = args.slice(1);
     var hk = Math.floor(Math.random() * 10);
-    console.log(hk);
 
     switch (cmd.toLowerCase()){
         case "help":
@@ -51,22 +50,15 @@ client.on('message', async message => {
             let itv = interval[message.guild.id];
             if (itv.status[0]) {
               let now = new Date();
-              console.log(itv.status[0]);
-              let t = now - itv.status[0];
-              console.log("time "+ t);
-              let delay = 5 * 60 * 1000;
+              let t = now - itv.status.pop();
+              let delay = 1 * 60 * 1000;
               if (t < delay){
                 let td = delay - t;
                 return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu ' + ms(td, { long: true }) + ' untuk bisa menggunakan command tersebut.');
-
-              }else{
-                message.channel.send("pull");
-                itv.status.pull();
               }
             }
 
             let status = message.createdTimestamp;
-            console.log('status '+ status);
             itv.status.push(status);
 
             let rMember = message.member;
