@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const Music = require('discord.js-musicbot-addon');
 
 const client = new Discord.Client();
-
+var dj = false;
 let PREFIX = botconfig.prefix;
 
 client.on('ready', async () => {
@@ -11,6 +11,23 @@ client.on('ready', async () => {
 
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
+
+Client.on('message' async message => {
+  if (isDJ(message.member)){
+    dj = true;
+  }else{
+    dj = false;
+  }
+});
+
+if(dj){
+  const music = new Music(client, {
+    prefix: PREFIX,
+    maxQueueSize: "20",
+    disableLoop: true,
+    youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+  });
+}
 
 client.on('message', async message => {
     if(message.author.bot) return;
@@ -21,28 +38,17 @@ client.on('message', async message => {
     var cmd = args[0];
     var args1 = args.slice(1);
 
-    if(isDJ(message.member) && cmd.toLowerCase()=== "play"){
-      const music = new Music(client, {
-        prefix: PREFIX,
-        maxQueueSize: "20",
-        disableLoop: true,
-        youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-      });
-    }else if( cmd.toLowerCase()=== "play" ){
-      message.channel.send("anda bukan DJ!");
-    }else{
-      switch (cmd.toLowerCase()){
-          case "help":
-              message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
-              break;
-          case "admin":
-              if (isAdmin(message.member)){
-                  message.channel.send("anda admin!");
-              } else {
-                  message.channel.send("anda bukan admin!");
-              }
-              break;
-      }
+    switch (cmd.toLowerCase()){
+        case "help":
+            message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
+            break;
+        case "admin":
+            if (isAdmin(message.member)){
+                message.channel.send("anda admin!");
+            } else {
+                message.channel.send("anda bukan admin!");
+            }
+            break;
     }
 });
 
