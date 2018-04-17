@@ -27,7 +27,7 @@ client.on('message', async message => {
     var args = message.content.substring(PREFIX.length).split(" ");
     var cmd = args[0];
     var args1 = args.slice(1);
-
+    var hk = Math.random() * 10
     switch (cmd.toLowerCase()){
         case "help":
             message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
@@ -39,10 +39,9 @@ client.on('message', async message => {
                 message.channel.send("anda bukan admin!");
             }
             break;
-        case "-hoki":
-            var change = Math.random() * 10
-            change = 7;
-            if (change === 7){
+        case "hoki":
+            hk = 7;
+            if (hk === 7){
                 let rMember = message.member;
                 if(!rMember) return message.reply("User tidak ada");
                 let gRole = message.guild.roles.find('name', "DJ");
