@@ -25,7 +25,7 @@ client.on('message', async message => {
         case "music":
             if(isDJ(message.member)){
               const music = new Music(client, {
-                prefix: "${PREFIX}music ",
+                prefix: PREFIX+"music ",
                 maxQueueSize: "20",
                 disableLoop: true,
                 youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
