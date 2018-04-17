@@ -10,7 +10,6 @@ let PREFIX = botconfig.prefix;
 let interval = {};
 let djlist = {};
 let mydj;
-let mDJ;
 
 client.on('ready', async () => {
     console.log('I am ready!');
@@ -35,7 +34,7 @@ client.on('message', async message => {
     if(!jRole) return message.reply("Role tidak ada");
     let djstat = djlist[message.member.id];
     let cmds = "play";
-    mDJ = djcheck(message, djstat, jRole, cmds, mydj);
+    djcheck(message, djstat, jRole, cmds, mydj);
   }
 });
 
@@ -49,6 +48,7 @@ client.on('message', async message => {
     var cmd = args[0];
     var args1 = args.slice(1);
     var hk = Math.floor(Math.random() * 10);
+    let mDJ;
 
     switch (cmd.toLowerCase()){
         case "help":
@@ -128,6 +128,7 @@ client.on('message', async message => {
             let djstat = djlist[message.member.id];
             let cmds = "djcheck";
             mDJ = djcheck(message, djstat, kRole, cmds, mydj);
+            console.log(mDJ);
             break;
         case "resetdjlist":
             if(isAdmin(message.member)){
@@ -146,8 +147,12 @@ client.on('message', async message => {
               let cmds = "play";
               mDJ = djcheck(message, djstat, jRole, cmds, mydj);
             }
-            console.log(mDJ);
-            if (mDJ){
+            console.log("play "+mDJ);
+            let rMember = message.member;
+            if(!rMember) return message.reply("User tidak ada");
+            let gRole = message.guild.roles.find('name', "DJ ♫");
+            if(!gRole) return message.reply("Role tidak ada");
+            if (!isDJ(rMember, gRole)){
               console.log("mydj");
               const music = new Music(client, {
                 prefix: PREFIX,
