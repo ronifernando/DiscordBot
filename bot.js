@@ -29,7 +29,8 @@ client.on('message', async message => {
     var cmd = args[0];
     var args1 = args.slice(1);
     var hk = Math.random() * 10;
-    
+    console.log(hk);
+
     switch (cmd.toLowerCase()){
         case "help":
             message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
