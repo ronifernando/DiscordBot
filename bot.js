@@ -122,6 +122,11 @@ client.on('message', async message => {
             let djstat = djlist[message.member.id];
             djcheck(message, djstat, kRole);
             break;
+        case "resetdjlist":
+            if(isAdmin(message.member)){
+              djlist = {};
+            }
+            break;
     }
 });
 
