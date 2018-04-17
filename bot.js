@@ -8,6 +8,7 @@ const client = new Discord.Client();
 let PREFIX = botconfig.prefix;
 
 let interval = {};
+let djlist = {};
 
 client.on('ready', async () => {
     console.log('I am ready!');
@@ -44,10 +45,10 @@ client.on('message', async message => {
             }
             break;
         case "hoki":
-            if(!interval[message.guild.id]) interval[message.guild.id]={
+            if(!interval[message.member.id]) interval[message.member.id]={
               status:[]
             };
-            let itv = interval[message.guild.id];
+            let itv = interval[message.member.id];
             if (itv.status[0]) {
               let now = new Date();
               let t = now - itv.status[0];
