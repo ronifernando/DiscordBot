@@ -103,16 +103,16 @@ client.on('message', async message => {
 });
 
 function addroledj(message, rMember, time, gRole){
-  message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   rMember.addRole(gRole.id);
+  message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   let mname = message.member.displayName;
   message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), '') + "♫");
 
   setTimeout(function(){
-    rMember.removeRole(gRole.id);
-    message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
+    message.channel.send('<@' + rMember.id + '>, Masa aktif role DJ anda telah berakhir.');
     let mname = message.member.displayName;
     message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
+    rMember.removeRole(gRole.id);
   }, ms(time));
 }
 
