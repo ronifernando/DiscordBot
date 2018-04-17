@@ -21,29 +21,28 @@ client.on('message', async message => {
     var cmd = args[0];
     var args1 = args.slice(1);
 
-    switch (cmd.toLowerCase()){
-        case "play":
-            if(isDJ(message.member)){
-              const music = new Music(client, {
-                prefix: PREFIX,
-                maxQueueSize: "20",
-                disableLoop: true,
-                youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-              });
-            }else{
-              message.channel.send("anda bukan DJ!");
-            }
-            break
-        case "help":
-            message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
-            break;
-        case "admin":
-            if (isAdmin(message.member)){
-                message.channel.send("anda admin!");
-            } else {
-                message.channel.send("anda bukan admin!");
-            }
-            break;
+    if(isDJ(message.member) && cmd.toLowerCase()=== "play"){
+      const music = new Music(client, {
+        prefix: PREFIX,
+        maxQueueSize: "20",
+        disableLoop: true,
+        youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+      });
+    }else if( cmd.toLowerCase()=== "play" ){
+      message.channel.send("anda bukan DJ!");
+    }else{
+      switch (cmd.toLowerCase()){
+          case "help":
+              message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
+              break;
+          case "admin":
+              if (isAdmin(message.member)){
+                  message.channel.send("anda admin!");
+              } else {
+                  message.channel.send("anda bukan admin!");
+              }
+              break;
+      }
     }
 });
 
