@@ -148,11 +148,11 @@ client.on('message', async message => {
               mDJ = djcheck(message, djstat, jRole, cmds, mydj);
             }
             console.log("play "+mDJ);
-            let rMember = message.member;
-            if(!rMember) return message.reply("User tidak ada");
-            let gRole = message.guild.roles.find('name', "DJ ♫");
-            if(!gRole) return message.reply("Role tidak ada");
-            if (!isDJ(rMember, gRole)){
+            let xMember = message.member;
+            if(!xMember) return message.reply("User tidak ada");
+            let yRole = message.guild.roles.find('name', "DJ ♫");
+            if(!yRole) return message.reply("Role tidak ada");
+            if (!isDJ(xMember, yRole)){
               console.log("mydj");
               const music = new Music(client, {
                 prefix: PREFIX,
