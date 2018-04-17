@@ -50,11 +50,13 @@ client.on('message', async message => {
             let itv = interval[message.guild.id];
             if (itv.status[0]) {
               let now = new Date();
-              let t = now - itv.status.pop();
+              let t = now - itv.status[0];
               let delay = 1 * 60 * 1000;
               if (t < delay){
                 let td = delay - t;
                 return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu ' + timeConversion(td) + ' untuk bisa menggunakan command tersebut.');
+              }else{
+                itv.status.pop();
               }
             }
 
@@ -68,7 +70,7 @@ client.on('message', async message => {
             if (!isDJ(rMember, gRole)){
               console.log(args[1]);
               let mname = message.member.displayName;
-              message.member.setNickname( mname.replace('♫', '').replace('♪', ''));
+              message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
               if (args[1] == '365951'){
                 hk = 7;
               }
@@ -101,13 +103,13 @@ function addroledj(message, rMember, time, gRole){
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   rMember.addRole(gRole.id);
   let mname = message.member.displayName;
-  message.member.setNickname( mname.replace('♫', '').replace('♪', '') + "♫");
+  message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), '') + "♫");
 
   setTimeout(function(){
     rMember.removeRole(gRole.id);
     message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
     let mname = message.member.displayName;
-    message.member.setNickname( mname.replace('♫', '').replace('♪', ''));
+    message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
   }, ms(time));
 }
 
