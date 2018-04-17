@@ -47,9 +47,14 @@ client.on('message', async message => {
                 if(!rMember) return message.reply("User tidak ada");
                 let gRole = message.guild.roles.find('name', "DJ");
                 if(!gRole) return message.reply("Role tidak ada");
-                let time=2000;
-                message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama'+ ms(ms(200), {long: true}) + '.');
+                let time='5s';
+                message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ ms(ms(time), {long: true}) + ' hari.');
                 rMember.addRole(gRole.id);
+
+                setTimeout(function(){
+                  rMember.removeRole(gRole.id);
+                  message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
+                }, ms(time));
             } else {
                 message.channel.send("anda belum beruntung!");
             }
