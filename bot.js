@@ -34,6 +34,15 @@ client.on('message', async message => {
     let cmds = "play";
     djcheck(message, djstat, jRole, cmds, mydj);
   }
+  console.log(mydj);
+  if (mydj){
+    console.log("mydj");
+    const music = new Music(client, {
+      prefix: PREFIX,
+      maxQueueSize: "20",
+      youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+    });
+  }
 });
 
 client.on('message', async message => {
@@ -56,15 +65,7 @@ client.on('message', async message => {
     djcheck(message, djstat, jRole, cmds, mydj);
   }
 });
-console.log(mydj);
-if (mydj){
-  console.log("mydj");
-  const music = new Music(client, {
-    prefix: PREFIX,
-    maxQueueSize: "20",
-    youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-  });
-}
+
 
 client.on('message', async message => {
     if(message.author.bot) return;
