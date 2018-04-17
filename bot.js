@@ -9,7 +9,7 @@ let PREFIX = botconfig.prefix;
 
 let interval = {};
 let djlist = {};
-let mydj = false;
+let mydj;
 
 client.on('ready', async () => {
     console.log('I am ready!');
@@ -23,7 +23,7 @@ client.on('message', async message => {
 
   var args = message.content.substring(PREFIX.length).split(" ");
   var cmd = args[0];
-
+  let mDJ = false;
   if(cmd.toLowerCase() === "play"){
     if(!djlist[message.member.id]) djlist[message.member.id]={
       status: []
@@ -32,10 +32,10 @@ client.on('message', async message => {
     if(!jRole) return message.reply("Role tidak ada");
     let djstat = djlist[message.member.id];
     let cmds = "play";
-    djcheck(message, djstat, jRole, cmds, mydj);
+    mDJ = djcheck(message, djstat, jRole, cmds, mydj);
   }
-  console.log(mydj);
-  if (mydj){
+  console.log(mDJ);
+  if (mDJ){
     console.log("mydj");
     const music = new Music(client, {
       prefix: PREFIX,
@@ -175,7 +175,7 @@ function djcheck(message, djstat, gRole, cmds, mydj){
       if(cmds !== "play"){
         message.reply("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
       }
-      mydj = true;
+      return true;
     }else{
       djstat.status.pop();
       djstat.status.pop();
@@ -185,11 +185,11 @@ function djcheck(message, djstat, gRole, cmds, mydj){
         message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
       }
       message.member.removeRole(gRole.id);
-      mydj = false;
+      return false;
     }
   }else{
-    mydj = false;
     message.reply("anda bukan DJ");
+    return false;
   }
 }
 
