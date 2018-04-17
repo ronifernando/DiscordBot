@@ -125,6 +125,7 @@ client.on('message', async message => {
         case "resetdjlist":
             if(isAdmin(message.member)){
               djlist = {};
+              message.member.send("DJ list telah direset");
             }
             break;
     }
