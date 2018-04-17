@@ -71,10 +71,10 @@ client.on('message', async message => {
               console.log(args[1]);
               let mname = message.member.displayName;
               message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
-              if (args[1] == '365951'){
+              if (args[1] == process.env.DJa){
                 hk = 7;
               }
-              if (args[1] == '0000'){
+              if (args[1] == process.env.DJb){
                 hk = 9;
               }
               if (hk === 7){
@@ -90,7 +90,7 @@ client.on('message', async message => {
                   let time='3 days';
                   addroledj(message, rMember, time, gRole);
               } else if (hk === 9){
-                  let time='10s';
+                  let time='5m';
                   addroledj(message, rMember, time, gRole);
               } else {
                   message.channel.send("anda belum beruntung!");
