@@ -56,7 +56,8 @@ client.on('message', async message => {
               console.log("time "+ t);
               let delay = 5 * 60 * 1000;
               if (t < delay{
-                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ ms(delay - t, { long: true })   +'.');
+                let td = delay - t;
+                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ ms(td, { long: true }) +'.');
 
               }else{
                 message.channel.send("pull");
