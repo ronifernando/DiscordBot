@@ -87,10 +87,10 @@ client.on('message', async message => {
             let hRole = message.guild.roles.find('name', "DJ ♫");
             if(!hRole) return message.reply("Role tidak ada");
             let djstat2 = djlist[message.member.id];
-            let cmds = "play";
+            let cmds2 = "play";
 
 
-            if(!djcheck(message, djstat2, hRole, cmds, mydj)){
+            if(!djcheck(message, djstat2, hRole, cmds2, mydj)){
               let rMember = message.member;
               if(!rMember) return message.reply("User tidak ada");
               let gRole = message.guild.roles.find('name', "DJ ♫");
