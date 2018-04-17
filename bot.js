@@ -49,9 +49,8 @@ client.on('message', async message => {
               status:[]
             };
             let itv = interval[message.guild.id];
-            if (interval[message.guild.id]) {
+            if (itv.status[0]) {
               console.log(itv.status[0]);
-              var now = new Date();
               if (now - itv.status[0] < 10 * 60 * 1000){
                 message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ now - itv.status[0]  +'.');
                 break
