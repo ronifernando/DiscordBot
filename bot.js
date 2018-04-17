@@ -116,14 +116,14 @@ client.on('message', async message => {
         case "djcheck":
             let kRole = message.guild.roles.find('name', "DJ ♫");
             if(!kRole) return message.reply("Role tidak ada");
+            let djstat = djlist[message.member.id];
             djcheck(message, djstat, kRole);
             break;
     }
 });
 
 function djcheck(message, djstat, gRole){
-  if(djlist[message.member.id].status[0]){
-    let djstat = djlist[message.member.id];
+  if(djlist[message.member.id].status[0]){  
     let now = new Date();
     let delay = now - djstat.status[0];;
     let djdelays = djstat.status[1];
