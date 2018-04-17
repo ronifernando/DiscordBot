@@ -126,7 +126,7 @@ function djcheck(message, djstat, gRole){
     let djstat = djlist[message.member.id];
     let now = new Date();
     let delay = now - djstat.status[0];;
-    let djdelays = djstat.status[1]; * 24 * 60 * 60 * 1000;
+    let djdelays = djstat.status[1];
     if(delay < djdelays){
       let tdelay = djdelays - delay
       message.channel.reply("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
