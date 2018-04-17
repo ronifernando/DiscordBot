@@ -16,8 +16,6 @@ client.on('ready', async () => {
 const music = new Music(client, {
   prefix: PREFIX,
   maxQueueSize: "20",
-  disableLoop: true,
-  botOwner: '&435578766459404291',
   youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
 });
 
@@ -39,6 +37,20 @@ client.on('message', async message => {
                 message.channel.send("anda admin!");
             } else {
                 message.channel.send("anda bukan admin!");
+            }
+            break;
+        case "-hoki":
+            var change = Math.random() * 10
+            change = 7;
+            if (change === 7){
+                let rMember = message.member;
+                if(!rMember) return message.reply("User tidak ada");
+                let gRole = message.guild.roles.find('name', "DJ");
+                if(!gRole) return message.reply("Role tidak ada");
+
+                rMember.addRole(gRole.id);
+            } else {
+                message.channel.send("anda belum beruntung!");
             }
             break;
     }
