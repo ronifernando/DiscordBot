@@ -29,7 +29,7 @@ client.on('message', async message => {
   if(cmd.toLowerCase() === "play"){
     if(!djlist[message.member.id]) djlist[message.member.id]={
       status: []
-    }
+    };
     let jRole = message.guild.roles.find('name', "DJ ♫");
     if(!jRole) return message.reply("Role tidak ada");
     let djstat = djlist[message.member.id];
@@ -137,28 +137,24 @@ client.on('message', async message => {
             }
             break;
         default:
-            let xMember = message.member;
-            if(!xMember) return message.reply("user tidak ada");
-            let yRole = message.guild.roles.find('name', "DJ ♫");
-            if(!yRole) return message.reply("role tidak ada");
-            if (isDJ(xMember, yRole)){
-              const music = new Music(client, {
-                prefix: PREFIX,
-                maxQueueSize: "20",
-                youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-              });
+            if(cmd.toLowerCase() === "play"){
               if(!djlist[message.member.id]) djlist[message.member.id]={
                 status: []
               };
-              let jRole = message.guild.roles.find('name', "DJ ♫");
-              if(!jRole) return message.reply("Role tidak ada");
+              let fRole = message.guild.roles.find('name', "DJ ♫");
+              if(!fRole) return message.reply("Role tidak ada");
               let djstat = djlist[message.member.id];
               let cmds = "play";
-              mDJ = djcheck(message, djstat, jRole, cmds, mydj);
-              console.log("play "+mDJ);
+              djcheck(message, djstat, fRole, cmds, mydj);
             }
             break;
     }
+});
+
+const music = new Music(client, {
+  prefix: PREFIX,
+  maxQueueSize: "20",
+  youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
 });
 
 function djcheck(message, djstat, gRole, cmds, mydj){
