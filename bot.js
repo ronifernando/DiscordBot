@@ -24,9 +24,14 @@ client.on('message', async message => {
   var cmd = args[0];
 
   if(cmd.toLowerCase() === "play"){
+    if(!djlist[message.member.id]) djlist[message.member.id]={
+      status: []
+    }
     let jRole = message.guild.roles.find('name', "DJ ♫");
     if(!jRole) return message.reply("Role tidak ada");
-    djcheck(message, djstat, jRole);
+    let djstat = djlist[message.member.id];
+    let cmds = "play";
+    djcheck(message, djstat, jRole, cmds);
   }
 });
 
@@ -120,7 +125,8 @@ client.on('message', async message => {
             let kRole = message.guild.roles.find('name', "DJ ♫");
             if(!kRole) return message.reply("Role tidak ada");
             let djstat = djlist[message.member.id];
-            djcheck(message, djstat, kRole);
+            let cmds = "djcheck";
+            djcheck(message, djstat, kRole, cmds);
             break;
         case "resetdjlist":
             if(isAdmin(message.member)){
@@ -131,14 +137,16 @@ client.on('message', async message => {
     }
 });
 
-function djcheck(message, djstat, gRole){
+function djcheck(message, djstat, gRole, cmds){
   if(djstat.status[0]){
     let now = new Date();
     let delay = now - djstat.status[0];;
     let djdelays = djstat.status[1];
     if(delay < djdelays){
       let tdelay = djdelays - delay
-      message.channel.send("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
+      if(cmds !== "play"){
+        message.channel.send("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
+      }
     }else{
       djstat.status.pop();
       djstat.status.pop();
@@ -148,7 +156,9 @@ function djcheck(message, djstat, gRole){
       message.member.removeRole(gRole.id);
     }
   }else{
-    message.channel.send("anda Bukan DJ");
+    if(cmds !== "play"){
+      message.channel.send("anda bukan DJ");
+    }
   }
 }
 
