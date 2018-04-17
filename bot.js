@@ -162,16 +162,13 @@ client.on('message', async message => {
             }
             break;
     }
-    
-    if (!isDJ(message.member, message.guild.roles.find('name', "DJ ♫"))){
-        Music(client, {
-          prefix: PREFIX,
-          maxQueueSize: "20",
-          youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-        });
-    }
 });
 
+Music(client, {
+    prefix: PREFIX,
+    maxQueueSize: "20",
+    youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+});
 
 function djcheck(message, djstat, gRole, cmds, mydj){
   if(djstat.status[0]){
