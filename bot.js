@@ -42,12 +42,13 @@ client.on('message', async message => {
             break;
         case "hoki":
             hk = 7;
-            if (isDJ(message.member)){
+            let rMember = message.member;
+            if(!rMember) return message.reply("User tidak ada");
+            let gRole = message.guild.roles.find('name', "DJ");
+            if(!gRole) return message.reply("Role tidak ada");
+            if (isDJ(rMember,gRole)){
               if (hk === 7){
-                  let rMember = message.member;
-                  if(!rMember) return message.reply("User tidak ada");
-                  let gRole = message.guild.roles.find('name', "DJ");
-                  if(!gRole) return message.reply("Role tidak ada");
+
                   let time='2 days';
                   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ ms(ms(time), {long: true}) + '.');
                   rMember.addRole(gRole.id);
@@ -71,8 +72,8 @@ function isAdmin(member) {
   return member.hasPermission("ADMINISTRATOR");
 }
 
-function isDJ(member) {
-  return member.roles.find("name", "DJ");
+function isDJ(member, role) {
+  return member.roles.has(role.id);
 }
 
 client.login(process.env.BOT_TOKEN);
