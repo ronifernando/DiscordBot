@@ -61,7 +61,7 @@ client.on('message', async message => {
             }
 
             let status = message.createAt;
-            console.log(message.createAt);
+            console.log('status '+ message.createAt);
             itv.status.push(status);
 
             let rMember = message.member;
