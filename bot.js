@@ -67,7 +67,8 @@ client.on('message', async message => {
             if(!gRole) return message.reply("Role tidak ada");
             if (!isDJ(rMember, gRole)){
               console.log(args[1]);
-              message.member.setNickname(message.member.nickname.replace('♫'|'♪','') + "♫");
+              let mname = message.member.nickname;
+              message.member.setNickname( mname.replace('♫'|'♪','') + "♫");
               if (args[1] == '365951'){
                 hk = 7;
               }
@@ -95,12 +96,14 @@ client.on('message', async message => {
 
 function addroledj(message, rMember, time, gRole){
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ ms(ms(time), {long: true}) + '.');
-  message.member.setNickname(message.member.nickname.replace('♫'|'♪','') + "♫");
+  let mname = message.member.nickname;
+  message.member.setNickname(mname.replace('♫'|'♪','') + "♫");
   rMember.addRole(gRole.id);
 
   setTimeout(function(){
     rMember.removeRole(gRole.id);
-    message.member.setNickname(message.member.nickname.replace('♫'|'♪',''));
+    let mname = message.member.nickname;
+    message.member.setNickname(mname.replace('♫'|'♪',''));
     message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
   }, ms(time));
 }
