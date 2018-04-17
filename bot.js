@@ -154,7 +154,7 @@ client.on('message', async message => {
             if(!kRole) return message.reply("Role tidak ada");
             let djstat = djlist[message.member.id];
             let cmds = "djcheck";
-            mDJ = djcheck(message, djstat, jRole, cmds, mydj);
+            mDJ = djcheck(message, djstat, kRole, cmds, mydj);
             break;
         case "resetdjlist":
             if(isAdmin(message.member)){
