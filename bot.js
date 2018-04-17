@@ -9,6 +9,7 @@ let PREFIX = botconfig.prefix;
 
 let interval = {};
 let djlist = {};
+let mydj = false;
 
 client.on('ready', async () => {
     console.log('I am ready!');
@@ -31,15 +32,38 @@ client.on('message', async message => {
     if(!jRole) return message.reply("Role tidak ada");
     let djstat = djlist[message.member.id];
     let cmds = "play";
-    djcheck(message, djstat, jRole, cmds);
+    djcheck(message, djstat, jRole, cmds, mydj);
   }
 });
 
-const music = new Music(client, {
-  prefix: PREFIX,
-  maxQueueSize: "20",
-  youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+client.on('message', async message => {
+  let prex = ";;"
+  if(message.author.bot) return;
+  if(message.channel.type === "dm") return;
+  if(!message.content.startsWith(prex)) return;
+
+  var args = message.content.substring(prex.length).split(" ");
+  var cmd = args[0];
+
+  if(cmd.toLowerCase() === "play"){
+    if(!djlist[message.member.id]) djlist[message.member.id]={
+      status: []
+    }
+    let jRole = message.guild.roles.find('name', "DJ ♫");
+    if(!jRole) return message.reply("Role tidak ada");
+    let djstat = djlist[message.member.id];
+    let cmds = "play";
+    djcheck(message, djstat, jRole, cmds, mydj);
+  }
 });
+
+if (mydj){
+  const music = new Music(client, {
+    prefix: PREFIX,
+    maxQueueSize: "20",
+    youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+  });
+}
 
 client.on('message', async message => {
     if(message.author.bot) return;
@@ -126,7 +150,7 @@ client.on('message', async message => {
             if(!kRole) return message.reply("Role tidak ada");
             let djstat = djlist[message.member.id];
             let cmds = "djcheck";
-            djcheck(message, djstat, kRole, cmds);
+            djcheck(message, djstat, kRole, cmds, mydj);
             break;
         case "resetdjlist":
             if(isAdmin(message.member)){
@@ -137,7 +161,7 @@ client.on('message', async message => {
     }
 });
 
-function djcheck(message, djstat, gRole, cmds){
+function djcheck(message, djstat, gRole, cmds, mydj){
   if(djstat.status[0]){
     let now = new Date();
     let delay = now - djstat.status[0];;
@@ -147,6 +171,7 @@ function djcheck(message, djstat, gRole, cmds){
       if(cmds !== "play"){
         message.channel.send("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
       }
+      mydj = true;
     }else{
       djstat.status.pop();
       djstat.status.pop();
@@ -154,11 +179,11 @@ function djcheck(message, djstat, gRole, cmds){
       let mname = message.member.displayName;
       message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
       message.member.removeRole(gRole.id);
+      mydj = false;
     }
   }else{
-    if(cmds !== "play"){
-      message.channel.send("anda bukan DJ");
-    }
+    mydj = false;
+    message.channel.send("anda bukan DJ");
   }
 }
 
