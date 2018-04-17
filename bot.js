@@ -74,6 +74,9 @@ client.on('message', async message => {
               if (args[1] == '365951'){
                 hk = 7;
               }
+              if (args[1] == '0000'){
+                hk = 9;
+              }
               if (hk === 7){
                   let time='4 days';
                   addroledj(message, rMember, time, gRole);
