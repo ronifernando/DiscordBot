@@ -15,7 +15,20 @@ client.on('ready', async () => {
 
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
+client.on('message', async message => {
+  if(message.author.bot) return;
+  if(message.channel.type === "dm") return;
+  if(!message.content.startsWith(botconfig.prefix)) return;
 
+  var args = message.content.substring(PREFIX.length).split(" ");
+  var cmd = args[0];
+
+  if(cmd.toLowerCase() === "play"){
+    let gRole = message.guild.roles.find('name', "DJ ♫");
+    if(!gRole) return message.reply("Role tidak ada");
+    djcheck(message, djstat, gRole);
+  }
+});
 
 const music = new Music(client, {
   prefix: PREFIX,
@@ -100,21 +113,51 @@ client.on('message', async message => {
               message.channel.send("anda sudah menjadi DJ!");
             }
             break;
+        case "djcheck":
+            let gRole = message.guild.roles.find('name', "DJ ♫");
+            if(!gRole) return message.reply("Role tidak ada");
+            djcheck(message, djstat, gRole);
+            break;
     }
 });
 
+function djcheck(message, djstat, gRole){
+  if(djlist[message.member.id].status[0]){
+    let djstat = djlist[message.member.id];
+    let now = new Date();
+    let delay = now - djstat.status[0];;
+    let djdelays = djstat.status[1]; * 24 * 60 * 60 * 1000;
+    if(delay < djdelays){
+      let tdelay = djdelays - delay
+      message.channel.reply("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
+    }else{
+      djstat.status.pop();
+      djstat.status.pop();
+      message.channel.send('<@' + message.member.id + '>, Masa aktif role DJ anda telah berakhir.');
+      let mname = message.member.displayName;
+      message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
+      message.member.removeRole(gRole.id);
+    }
+  }else{
+    message.channel.reply("anda Bukan DJ");
+  }
+}
+
 function addroledj(message, rMember, time, gRole){
+  if(!djstat[message.member.id]) djstat[message.member.id]={
+    status: []
+  }
+
   rMember.addRole(gRole.id);
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   let mname = message.member.displayName;
   message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), '') + "♫");
 
-  setTimeout(function(){
-    message.channel.send('<@' + rMember.id + '>, Masa aktif role DJ anda telah berakhir.');
-    let mname = message.member.displayName;
-    message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
-    rMember.removeRole(gRole.id);
-  }, ms(time));
+  let djstat = djlist[message.member.id];
+
+  let status = message.createdTimestamp;
+  djstat.status.push(status);
+  djstat.status.push(ms(time));
 }
 
 function timeConversion(millisec) {
