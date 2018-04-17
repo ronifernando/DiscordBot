@@ -55,9 +55,9 @@ client.on('message', async message => {
               let t = now - itv.status[0];
               console.log("time "+ t);
               let delay = 5 * 60 * 1000;
-              if (t < delay{
+              if (t < delay){
                 let td = delay - t;
-                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ ms(td, { long: true }) +' untuk bisa menggunakan command tersebut.');
+                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu ' + ms(td, { long: true }) + ' untuk bisa menggunakan command tersebut.');
 
               }else{
                 message.channel.send("pull");
