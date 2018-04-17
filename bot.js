@@ -122,7 +122,7 @@ client.on('message', async message => {
         case "djcheck":
             if(!djlist[message.member.id]) djlist[message.member.id]={
               status: []
-            }
+            };
             let kRole = message.guild.roles.find('name', "DJ ♫");
             if(!kRole) return message.reply("Role tidak ada");
             let djstat = djlist[message.member.id];
@@ -149,7 +149,7 @@ client.on('message', async message => {
               });
               if(!djlist[message.member.id]) djlist[message.member.id]={
                 status: []
-              }
+              };
               let jRole = message.guild.roles.find('name', "DJ ♫");
               if(!jRole) return message.reply("Role tidak ada");
               let djstat = djlist[message.member.id];
@@ -192,7 +192,7 @@ function djcheck(message, djstat, gRole, cmds, mydj){
 function addroledj(message, rMember, time, gRole){
   if(!djlist[message.member.id]) djlist[message.member.id]={
     status: []
-  }
+  };
   rMember.addRole(gRole.id);
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   let mname = message.member.displayName;
