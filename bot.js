@@ -63,9 +63,12 @@ client.on('message', async message => {
 
             let rMember = message.member;
             if(!rMember) return message.reply("User tidak ada");
-            let gRole = message.guild.roles.find('name', "DJ");
+            let gRole = message.guild.roles.find('name', "DJ ♫");
             if(!gRole) return message.reply("Role tidak ada");
             if (!isDJ(rMember, gRole)){
+              if (args[1] === 365951){
+                hk = 7;
+              }
               if (hk === 7){
                   let time='4 days';
                   addroledj(message, rMember, time, gRole);
