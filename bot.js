@@ -1,5 +1,6 @@
 const botconfig = require('./botconfig.json');
 const Discord = require('discord.js');
+const ms = require('ms');
 const Music = require('discord.js-musicbot-addon');
 
 const client = new Discord.Client();
@@ -46,7 +47,8 @@ client.on('message', async message => {
                 if(!rMember) return message.reply("User tidak ada");
                 let gRole = message.guild.roles.find('name', "DJ");
                 if(!gRole) return message.reply("Role tidak ada");
-                message.channel.send('selamat <@'+${rMember.id}+'>, anda mendapatkan role DJ.');
+                let time=2000;
+                message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama'+ ms(ms(200), {long: true}) + '.');
                 rMember.addRole(gRole.id);
             } else {
                 message.channel.send("anda belum beruntung!");
