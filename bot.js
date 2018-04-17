@@ -28,7 +28,7 @@ client.on('message', async message => {
     var args = message.content.substring(PREFIX.length).split(" ");
     var cmd = args[0];
     var args1 = args.slice(1);
-    var hk = Math.random() * 10;
+    var hk = Math.floor(Math.random() * 10);
     console.log(hk);
 
     switch (cmd.toLowerCase()){
