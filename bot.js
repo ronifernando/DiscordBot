@@ -54,7 +54,7 @@ client.on('message', async message => {
               let delay = 1 * 60 * 1000;
               if (t < delay){
                 let td = delay - t;
-                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu ' + ms(td, { long: true }) + ' untuk bisa menggunakan command tersebut.');
+                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu ' + timeConversion(td) + ' untuk bisa menggunakan command tersebut.');
               }
             }
 
@@ -97,6 +97,23 @@ function addroledj(message, rMember, time, gRole){
     message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
   }, ms(time));
 }
+
+function timeConversion(millisec) {
+        var seconds = (millisec / 1000).toFixed(1);
+        var minutes = (millisec / (1000 * 60)).toFixed(1);
+        var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+        var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+
+        if (seconds < 60) {
+            return seconds + " detik";
+        } else if (minutes < 60) {
+            return minutes + " menit";
+        } else if (hours < 24) {
+            return hours + " jam";
+        } else {
+            return days + " hari"
+        }
+    }
 
 function isAdmin(member) {
   return member.hasPermission("ADMINISTRATOR");
