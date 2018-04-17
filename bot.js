@@ -60,8 +60,8 @@ client.on('message', async message => {
               }
             }
 
-            let status = message.createAt;
-            console.log('status '+ message.createAt);
+            let status = message.createdTimestamp;
+            console.log('status '+ status);
             itv.status.push(status);
 
             let rMember = message.member;
