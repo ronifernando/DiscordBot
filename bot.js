@@ -10,6 +10,7 @@ let PREFIX = botconfig.prefix;
 let interval = {};
 let djlist = {};
 let mydj;
+let mDJ;
 
 client.on('ready', async () => {
     console.log('I am ready!');
@@ -23,7 +24,6 @@ client.on('message', async message => {
 
   var args = message.content.substring(PREFIX.length).split(" ");
   var cmd = args[0];
-  let mDJ = false;
   if(cmd.toLowerCase() === "play"){
     if(!djlist[message.member.id]) djlist[message.member.id]={
       status: []
@@ -62,7 +62,7 @@ client.on('message', async message => {
     if(!jRole) return message.reply("Role tidak ada");
     let djstat = djlist[message.member.id];
     let cmds = "play";
-    djcheck(message, djstat, jRole, cmds, mydj);
+    mDJ = djcheck(message, djstat, jRole, cmds, mydj);
   }
 });
 
@@ -154,7 +154,7 @@ client.on('message', async message => {
             if(!kRole) return message.reply("Role tidak ada");
             let djstat = djlist[message.member.id];
             let cmds = "djcheck";
-            djcheck(message, djstat, kRole, cmds, mydj);
+            mDJ = djcheck(message, djstat, jRole, cmds, mydj);
             break;
         case "resetdjlist":
             if(isAdmin(message.member)){
