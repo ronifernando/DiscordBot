@@ -22,10 +22,10 @@ client.on('message', async message => {
     var args1 = args.slice(1);
 
     switch (cmd.toLowerCase()){
-        case "music":
+        case "play":
             if(isDJ(message.member)){
               const music = new Music(client, {
-                prefix: PREFIX+"music ",
+                prefix: PREFIX,
                 maxQueueSize: "20",
                 disableLoop: true,
                 youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
