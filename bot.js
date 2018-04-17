@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const Music = require('discord.js-musicbot-addon');
 
 const client = new Discord.Client();
-var dj = false;
+
 let PREFIX = botconfig.prefix;
 
 client.on('ready', async () => {
@@ -12,22 +12,14 @@ client.on('ready', async () => {
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
 
-client.on('message', async message => {
-  if (isDJ(message.member)){
-    dj = true;
-  }else{
-    dj = false;
-  }
-});
 
-if(dj){
-  const music = new Music(client, {
-    prefix: PREFIX,
-    maxQueueSize: "20",
-    disableLoop: true,
-    youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-  });
-}
+const music = new Music(client, {
+  prefix: PREFIX,
+  maxQueueSize: "20",
+  disableLoop: true,
+  botOwner: '&435578766459404291',
+  youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+});
 
 client.on('message', async message => {
     if(message.author.bot) return;
