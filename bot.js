@@ -12,7 +12,7 @@ client.on('ready', async () => {
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
 
-Client.on('message' async message => {
+client.on('message' async message => {
   if (isDJ(message.member)){
     dj = true;
   }else{
