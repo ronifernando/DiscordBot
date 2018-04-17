@@ -90,6 +90,7 @@ client.on('message', async message => {
 
 function addroledj(message, rMember, time, gRole){
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ ms(ms(time), {long: true}) + '.');
+  message.member.setNickname(message.member.nickname + "♫");
   rMember.addRole(gRole.id);
 
   setTimeout(function(){
