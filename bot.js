@@ -123,7 +123,7 @@ client.on('message', async message => {
 });
 
 function djcheck(message, djstat, gRole){
-  if(djlist[message.member.id].status[0]){  
+  if(djstat.status[0]){
     let now = new Date();
     let delay = now - djstat.status[0];;
     let djdelays = djstat.status[1];
@@ -144,7 +144,7 @@ function djcheck(message, djstat, gRole){
 }
 
 function addroledj(message, rMember, time, gRole){
-  if(!djstat[message.member.id]) djstat[message.member.id]={
+  if(!djlist[message.member.id]) djlist[message.member.id]={
     status: []
   }
 
