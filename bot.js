@@ -12,14 +12,6 @@ client.on('ready', async () => {
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
 
-const music = new Music(client, {
-  prefix: PREFIX,
-  maxQueueSize: "20",
-  disableLoop: true,
-  ownerCmd: "DJ",
-  youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-});
-
 client.on('message', async message => {
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
@@ -29,11 +21,19 @@ client.on('message', async message => {
     var cmd = args[0];
     var args1 = args.slice(1);
 
-    if(isDJ(message.member)){
-
-    }
-
     switch (cmd.toLowerCase()){
+        case "music":
+            if(isDJ(message.member)){
+              const music = new Music(client, {
+                prefix: "${PREFIX}music ",
+                maxQueueSize: "20",
+                disableLoop: true,
+                youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+              });
+            }else{
+              message.channel.send("anda bukan DJ!");
+            }
+            break
         case "help":
             message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
             break;
