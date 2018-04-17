@@ -33,7 +33,7 @@ client.on('message', async message => {
         case "help":
             message.channel.send("Under Development!\n=====================\nAlready implemented\n-Music Features");
             break;
-        case "admin":
+        case "Admin":
             if (isAdmin(message.member)){
                 message.channel.send("anda admin!");
             } else {
@@ -41,32 +41,42 @@ client.on('message', async message => {
             }
             break;
         case "hoki":
-            hk = 7;
             let rMember = message.member;
             if(!rMember) return message.reply("User tidak ada");
             let gRole = message.guild.roles.find('name', "DJ");
             if(!gRole) return message.reply("Role tidak ada");
             if (!isDJ(rMember, gRole)){
               if (hk === 7){
-
+                  let time='4 days';
+                  addroledj(message, rMember, time, gRole);
+              } else if (hk === 1){
                   let time='2 days';
-                  message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ ms(ms(time), {long: true}) + '.');
-                  rMember.addRole(gRole.id);
-
-                  setTimeout(function(){
-                    rMember.removeRole(gRole.id);
-                    message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
-                  }, ms(time));
+                  addroledj(message, rMember, time, gRole);
+              } else if (hk === 5){
+                  let time='1 days';
+                  addroledj(message, rMember, time, gRole);
+              } else if (hk === 0){
+                  let time='3 days';
+                  addroledj(message, rMember, time, gRole);
               } else {
                   message.channel.send("anda belum beruntung!");
               }
             } else {
               message.channel.send("anda sudah menjadi DJ!");
             }
-
             break;
     }
 });
+
+function addroledj(message, rMember, time, gRole){
+  message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ ms(ms(time), {long: true}) + '.');
+  rMember.addRole(gRole.id);
+
+  setTimeout(function(){
+    rMember.removeRole(gRole.id);
+    message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
+  }, ms(time));
+}
 
 function isAdmin(member) {
   return member.hasPermission("ADMINISTRATOR");
