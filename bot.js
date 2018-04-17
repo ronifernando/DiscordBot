@@ -52,11 +52,14 @@ client.on('message', async message => {
             if (itv.status[0]) {
               let now = new Date();
               console.log(itv.status[0]);
+              let t = now - itv.status[0];
+              console.log("time "+ t);
               if (now - itv.status[0] < 10 * 60 * 1000){
                 message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ now - itv.status[0]  +'.');
                 break
               }else{
-                itv.status.shift();
+                message.channel.send("pull");
+                itv.status.pull();
               }
             }
 
