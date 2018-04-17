@@ -153,8 +153,7 @@ client.on('message', async message => {
             let yRole = message.guild.roles.find('name', "DJ ♫");
             if(!yRole) return message.reply("Role tidak ada");
             if (isDJ(xMember, yRole)){
-              console.log("mydj");
-              const music = new Music(client, {
+              let music = new Music(client, {
                 prefix: PREFIX,
                 maxQueueSize: "20",
                 youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
