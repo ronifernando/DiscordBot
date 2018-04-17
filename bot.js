@@ -87,7 +87,7 @@ client.on('message', async message => {
             let hRole = message.guild.roles.find('name', "DJ ♫");
             if(!hRole) return message.reply("Role tidak ada");
             let djstat2 = djlist[message.member.id];
-            let cmds2 = "play";
+            let cmds2 = "hoki";
 
 
             if(!djcheck(message, djstat2, hRole, cmds2, mydj)){
@@ -177,7 +177,7 @@ function djcheck(message, djstat, gRole, cmds, mydj){
     let djdelays = djstat.status[1];
     if(delay < djdelays){
       let tdelay = djdelays - delay
-      if(cmds !== "play"){
+      if(cmds !== "play" || cmds !== "hoki"){
         message.reply("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
       }
       return true;
@@ -193,7 +193,9 @@ function djcheck(message, djstat, gRole, cmds, mydj){
       return false;
     }
   }else{
-    message.reply("anda bukan DJ");
+    if(cmds !== "hoki"){
+        message.reply("anda bukan DJ");
+    }
     return false;
   }
 }
