@@ -7,6 +7,8 @@ const client = new Discord.Client();
 
 let PREFIX = botconfig.prefix;
 
+let interval = {};
+
 client.on('ready', async () => {
     console.log('I am ready!');
 
@@ -43,6 +45,22 @@ client.on('message', async message => {
             }
             break;
         case "hoki":
+            if(!interval[message.guild.id]) interval[message.guild.id]={
+              status:[]
+            };
+            var itv = interval[message.guild.id];
+            if (interval[message.guild.id]) {
+              var now = new date();
+              if (now - itv.status[0] < 10 * 60 * 1000){
+                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ now - itv.status[0]  +'.');
+              }else{
+                itv.status.shift();
+              }
+            }
+
+            let status = message.createAt;
+            itv.status.push(status);
+
             let rMember = message.member;
             if(!rMember) return message.reply("User tidak ada");
             let gRole = message.guild.roles.find('name', "DJ");
