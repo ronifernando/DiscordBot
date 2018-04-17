@@ -68,7 +68,7 @@ client.on('message', async message => {
             if (!isDJ(rMember, gRole)){
               console.log(args[1]);
               let mname = message.member.displayName;
-              message.member.setNickname( mname.replace('♫', ''));
+              message.member.setNickname( mname.replace('♫', '').replace('♪', ''));
               if (args[1] == '365951'){
                 hk = 7;
               }
@@ -84,6 +84,9 @@ client.on('message', async message => {
               } else if (hk === 0){
                   let time='3 days';
                   addroledj(message, rMember, time, gRole);
+              } else if (hk === 9){
+                  let time='10s';
+                  addroledj(message, rMember, time, gRole);
               } else {
                   message.channel.send("anda belum beruntung!");
               }
@@ -98,21 +101,21 @@ function addroledj(message, rMember, time, gRole){
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   rMember.addRole(gRole.id);
   let mname = message.member.displayName;
-  message.member.setNickname( mname.replace('♫', '') + "♫");
+  message.member.setNickname( mname.replace('♫', '').replace('♪', '') + "♫");
 
   setTimeout(function(){
     rMember.removeRole(gRole.id);
     message.channel.send('<@' + rMember.id + '>, Masa aktir role DJ anda telah berakhir.');
     let mname = message.member.displayName;
-    message.member.setNickname( mname.replace('♫', ''));
+    message.member.setNickname( mname.replace('♫', '').replace('♪', ''));
   }, ms(time));
 }
 
 function timeConversion(millisec) {
         var seconds = (millisec / 1000).toFixed(1);
         var minutes = (millisec / (1000 * 60)).toFixed(1);
-        var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
-        var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+        var hours = (millisec / (1000 * 60 * 60)).toFixed(0);
+        var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
 
         if (seconds < 60) {
             return seconds + " detik";
