@@ -17,33 +17,6 @@ client.on('ready', async () => {
 
     client.user.setPresence({ game: { name: '-help', type: 2 } });
 });
-client.on('message', async message => {
-  if(message.author.bot) return;
-  if(message.channel.type === "dm") return;
-  if(!message.content.startsWith(botconfig.prefix)) return;
-
-  var args = message.content.substring(PREFIX.length).split(" ");
-  var cmd = args[0];
-  if(cmd.toLowerCase() === "play"){
-    if(!djlist[message.member.id]) djlist[message.member.id]={
-      status: []
-    }
-    let jRole = message.guild.roles.find('name', "DJ ♫");
-    if(!jRole) return message.reply("Role tidak ada");
-    let djstat = djlist[message.member.id];
-    let cmds = "play";
-    mDJ = djcheck(message, djstat, jRole, cmds, mydj);
-  }
-  console.log(mDJ);
-  if (mDJ){
-    console.log("mydj");
-    const music = new Music(client, {
-      prefix: PREFIX,
-      maxQueueSize: "20",
-      youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-    });
-  }
-});
 
 client.on('message', async message => {
   let prex = ";;";
@@ -160,6 +133,27 @@ client.on('message', async message => {
             if(isAdmin(message.member)){
               djlist = {};
               message.member.send("DJ list telah direset");
+            }
+            break;
+        default:
+            if(cmd.toLowerCase() === "play"){
+              if(!djlist[message.member.id]) djlist[message.member.id]={
+                status: []
+              }
+              let jRole = message.guild.roles.find('name', "DJ ♫");
+              if(!jRole) return message.reply("Role tidak ada");
+              let djstat = djlist[message.member.id];
+              let cmds = "play";
+              mDJ = djcheck(message, djstat, jRole, cmds, mydj);
+            }
+            console.log(mDJ);
+            if (mDJ){
+              console.log("mydj");
+              const music = new Music(client, {
+                prefix: PREFIX,
+                maxQueueSize: "20",
+                youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+              });
             }
             break;
     }
