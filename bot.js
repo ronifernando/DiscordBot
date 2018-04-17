@@ -137,7 +137,16 @@ client.on('message', async message => {
             }
             break;
         default:
-            if(cmd.toLowerCase() === "play"){
+            let xMember = message.member;
+            if(!xMember) return message.reply("user tidak ada");
+            let yRole = message.guild.roles.find('name', "DJ ♫");
+            if(!yRole) return message.reply("role tidak ada");
+            if (isDJ(xMember, yRole)){
+              const music = new Music(client, {
+                prefix: PREFIX,
+                maxQueueSize: "20",
+                youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
+              });
               if(!djlist[message.member.id]) djlist[message.member.id]={
                 status: []
               }
@@ -146,18 +155,7 @@ client.on('message', async message => {
               let djstat = djlist[message.member.id];
               let cmds = "play";
               mDJ = djcheck(message, djstat, jRole, cmds, mydj);
-            }
-            console.log("play "+mDJ);
-            let xMember = message.member;
-            if(!xMember) return message.reply("User tidak ada");
-            let yRole = message.guild.roles.find('name', "DJ ♫");
-            if(!yRole) return message.reply("Role tidak ada");
-            if (isDJ(xMember, yRole)){
-              const music = new Music(client, {
-                prefix: PREFIX,
-                maxQueueSize: "20",
-                youtubeKey: 'AIzaSyAMpPZdsqJxBySqctF0YDiFYaHnZClCuwg'
-              });
+              console.log("play "+mDJ);
             }
             break;
     }
