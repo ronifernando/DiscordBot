@@ -57,7 +57,7 @@ client.on('message', async message => {
               let delay = 5 * 60 * 1000;
               if (t < delay{
                 let td = delay - t;
-                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ ms(td, { long: true }) +'.');
+                return message.channel.send('<@'+message.member.id+'>, Anda harus menunggu '+ ms(td, { long: true }) +' untuk bisa menggunakan command tersebut.');
 
               }else{
                 message.channel.send("pull");
