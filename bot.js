@@ -66,7 +66,8 @@ client.on('message', async message => {
             let gRole = message.guild.roles.find('name', "DJ ♫");
             if(!gRole) return message.reply("Role tidak ada");
             if (!isDJ(rMember, gRole)){
-              if (args1 === "365951"){
+              console.log(args[1]);
+              if (args[1] == '365951'){
                 hk = 7;
               }
               if (hk === 7){
@@ -93,7 +94,9 @@ client.on('message', async message => {
 
 function addroledj(message, rMember, time, gRole){
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ ms(ms(time), {long: true}) + '.');
+  console.log(message.member.nickname);
   message.member.setNickname(message.member.nickname + " ♫");
+  console.log(message.member.nickname);
   rMember.addRole(gRole.id);
 
   setTimeout(function(){
