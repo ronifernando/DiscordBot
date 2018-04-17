@@ -56,8 +56,9 @@ client.on('message', async message => {
     djcheck(message, djstat, jRole, cmds, mydj);
   }
 });
-
+console.log(mydj);
 if (mydj){
+  console.log("mydj");
   const music = new Music(client, {
     prefix: PREFIX,
     maxQueueSize: "20",
@@ -113,7 +114,9 @@ client.on('message', async message => {
             if (!isDJ(rMember, gRole)){
               console.log(args[1]);
               let mname = message.member.displayName;
-              message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
+              if(!isAdmin(message.member)){
+                message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
+              }
               if (args[1] == process.env.DJa){
                 hk = 7;
               }
@@ -169,7 +172,7 @@ function djcheck(message, djstat, gRole, cmds, mydj){
     if(delay < djdelays){
       let tdelay = djdelays - delay
       if(cmds !== "play"){
-        message.channel.send("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
+        message.reply("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
       }
       mydj = true;
     }else{
@@ -177,13 +180,15 @@ function djcheck(message, djstat, gRole, cmds, mydj){
       djstat.status.pop();
       message.channel.send('<@' + message.member.id + '>, Masa aktif role DJ anda telah berakhir.');
       let mname = message.member.displayName;
-      message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
+      if(!isAdmin(message.member)){
+        message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
+      }
       message.member.removeRole(gRole.id);
       mydj = false;
     }
   }else{
     mydj = false;
-    message.channel.send("anda bukan DJ");
+    message.reply("anda bukan DJ");
   }
 }
 
@@ -194,7 +199,9 @@ function addroledj(message, rMember, time, gRole){
   rMember.addRole(gRole.id);
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   let mname = message.member.displayName;
-  message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), '') + "♫");
+  if(!isAdmin(message.member)){
+    message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), '') + "♫");
+  }
 
   let djstat = djlist[message.member.id];
 
