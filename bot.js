@@ -24,9 +24,9 @@ client.on('message', async message => {
   var cmd = args[0];
 
   if(cmd.toLowerCase() === "play"){
-    let gRole = message.guild.roles.find('name', "DJ ♫");
-    if(!gRole) return message.reply("Role tidak ada");
-    djcheck(message, djstat, gRole);
+    let jRole = message.guild.roles.find('name', "DJ ♫");
+    if(!jRole) return message.reply("Role tidak ada");
+    djcheck(message, djstat, jRole);
   }
 });
 
@@ -114,9 +114,9 @@ client.on('message', async message => {
             }
             break;
         case "djcheck":
-            let gRole = message.guild.roles.find('name', "DJ ♫");
-            if(!gRole) return message.reply("Role tidak ada");
-            djcheck(message, djstat, gRole);
+            let kRole = message.guild.roles.find('name', "DJ ♫");
+            if(!kRole) return message.reply("Role tidak ada");
+            djcheck(message, djstat, kRole);
             break;
     }
 });
