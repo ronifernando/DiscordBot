@@ -114,6 +114,9 @@ client.on('message', async message => {
             }
             break;
         case "djcheck":
+            if(!djlist[message.member.id]) djlist[message.member.id]={
+              status: []
+            }
             let kRole = message.guild.roles.find('name', "DJ ♫");
             if(!kRole) return message.reply("Role tidak ada");
             let djstat = djlist[message.member.id];
@@ -129,7 +132,7 @@ function djcheck(message, djstat, gRole){
     let djdelays = djstat.status[1];
     if(delay < djdelays){
       let tdelay = djdelays - delay
-      message.channel.reply("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
+      message.channel.send("role DJ anda akan berakhir setelah "+ timeConversion(tdelay));
     }else{
       djstat.status.pop();
       djstat.status.pop();
@@ -139,7 +142,7 @@ function djcheck(message, djstat, gRole){
       message.member.removeRole(gRole.id);
     }
   }else{
-    message.channel.reply("anda Bukan DJ");
+    message.channel.send("anda Bukan DJ");
   }
 }
 
@@ -147,7 +150,6 @@ function addroledj(message, rMember, time, gRole){
   if(!djlist[message.member.id]) djlist[message.member.id]={
     status: []
   }
-
   rMember.addRole(gRole.id);
   message.channel.send('selamat <@' + rMember.id + '>, anda mendapatkan role DJ selama '+ timeConversion(ms(time)) + '.');
   let mname = message.member.displayName;
