@@ -81,39 +81,52 @@ client.on('message', async message => {
             let status = message.createdTimestamp;
             itv.status.push(status);
 
-            let rMember = message.member;
-            if(!rMember) return message.reply("User tidak ada");
-            let gRole = message.guild.roles.find('name', "DJ ♫");
-            if(!gRole) return message.reply("Role tidak ada");
-            if (!isDJ(rMember, gRole)){
-              console.log(args[1]);
-              let mname = message.member.displayName;
-              if(!isAdmin(message.member)){
-                message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
-              }
-              if (args[1] == process.env.DJa){
-                hk = 7;
-              }
-              if (args[1] == process.env.DJb){
-                hk = 9;
-              }
-              if (hk === 7){
-                  let time='4 days';
-                  addroledj(message, rMember, time, gRole);
-              } else if (hk === 1){
-                  let time='2 days';
-                  addroledj(message, rMember, time, gRole);
-              } else if (hk === 5){
-                  let time='1 days';
-                  addroledj(message, rMember, time, gRole);
-              } else if (hk === 0){
-                  let time='3 days';
-                  addroledj(message, rMember, time, gRole);
-              } else if (hk === 9){
-                  let time='5m';
-                  addroledj(message, rMember, time, gRole);
+            if(!djlist[message.member.id]) djlist[message.member.id]={
+              status: []
+            };
+            let fRole = message.guild.roles.find('name', "DJ ♫");
+            if(!fRole) return message.reply("Role tidak ada");
+            let djstat = djlist[message.member.id];
+            let cmds = "play";
+
+
+            if(!djcheck(message, djstat, fRole, cmds, mydj)){
+              let rMember = message.member;
+              if(!rMember) return message.reply("User tidak ada");
+              let gRole = message.guild.roles.find('name', "DJ ♫");
+              if(!gRole) return message.reply("Role tidak ada");
+              if (!isDJ(rMember, gRole)){
+                console.log(args[1]);
+                let mname = message.member.displayName;
+                if(!isAdmin(message.member)){
+                  message.member.setNickname( mname.replace(new RegExp('♫', 'g'), '').replace(new RegExp('♪', 'g'), ''));
+                }
+                if (args[1] == process.env.DJa){
+                  hk = 7;
+                }
+                if (args[1] == process.env.DJb){
+                  hk = 9;
+                }
+                if (hk === 7){
+                    let time='4 days';
+                    addroledj(message, rMember, time, gRole);
+                } else if (hk === 1){
+                    let time='2 days';
+                    addroledj(message, rMember, time, gRole);
+                } else if (hk === 5){
+                    let time='1 days';
+                    addroledj(message, rMember, time, gRole);
+                } else if (hk === 0){
+                    let time='3 days';
+                    addroledj(message, rMember, time, gRole);
+                } else if (hk === 9){
+                    let time='5m';
+                    addroledj(message, rMember, time, gRole);
+                } else {
+                    message.channel.send("anda belum beruntung!");
+                }
               } else {
-                  message.channel.send("anda belum beruntung!");
+                message.channel.send("anda sudah menjadi DJ!");
               }
             } else {
               message.channel.send("anda sudah menjadi DJ!");
