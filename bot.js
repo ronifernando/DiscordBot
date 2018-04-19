@@ -14,7 +14,7 @@ let mydj;
 client.on('ready', async () => {
     console.log('I am ready!');
 
-    client.user.setPresence({ game: { name: '-help', type: 2 } });
+    client.user.setPresence({ game: { name: '-help', type: 0 } });
 });
 
 client.on('message', async message => {
